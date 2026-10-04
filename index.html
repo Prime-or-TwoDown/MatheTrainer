@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>1x1 Trainer</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="1x1 Trainer">
+    
+    <!-- Das App-Icon für den iOS Home-Bildschirm -->
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Chart.js für die Graphen -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Screen: Setup -->
+        <div id="screen-setup" class="screen active">
+            <h1>1x1 Trainer</h1>
+            <div class="card">
+                <h2>Einstellungen</h2>
+                
+                <div class="setting-group">
+                    <label for="max-result">Ergebnisse bis maximal:</label>
+                    <input type="number" id="max-result" value="100" inputmode="numeric">
+                </div>
+
+                <div class="setting-group">
+                    <label>Rechenarten:</label>
+                    <div class="checkbox-container">
+                        <label class="checkbox-label"><input type="checkbox" id="op-mul" checked> <span>✖️ Multiplikation</span></label>
+                        <label class="checkbox-label"><input type="checkbox" id="op-div" checked> <span>➗ Division</span></label>
+                        <label class="checkbox-label"><input type="checkbox" id="op-add" checked> <span>➕ Addition</span></label>
+                        <label class="checkbox-label"><input type="checkbox" id="op-sub" checked> <span>➖ Subtraktion</span></label>
+                    </div>
+                </div>
+            </div>
+            <button id="btn-stats" class="btn-secondary">Statistiken</button>
+            <button id="btn-start" class="btn-primary" style="margin-top: 15px;">Starten</button>
+        </div>
+
+        <!-- Screen: Quiz -->
+        <div id="screen-quiz" class="screen">
+            <div class="header">
+                <span id="progress-text">Aufgabe 1 / 10</span>
+                <button id="btn-cancel" class="btn-text">Abbrechen</button>
+            </div>
+            
+            <div class="task-container">
+                <div id="task-text">7 ✖️ 8 =</div>
+                <input type="number" id="answer-input" pattern="[0-9]*" inputmode="numeric" placeholder="?">
+                <button id="btn-submit" class="btn-primary btn-submit-task">Prüfen</button>
+            </div>
+        </div>
+
+        <!-- Screen: Result -->
+        <div id="screen-result" class="screen">
+            <h1>Ergebnis</h1>
+            <div class="score-circle">
+                <span id="score-text">8/10</span>
+            </div>
+            <p id="feedback-text">Gut gemacht!</p>
+            
+            <div id="history-container" class="history-list">
+                <!-- Wird per JS befüllt -->
+            </div>
+
+            <button id="btn-restart" class="btn-primary">Neue Runde</button>
+        </div>
+
+        <!-- Screen: Stats -->
+        <div id="screen-stats" class="screen" style="overflow-y: auto;">
+            <div class="header">
+                <h2 style="margin:0;">Statistiken</h2>
+                <button id="btn-close-stats" class="btn-text">Schließen</button>
+            </div>
+            
+            <div class="card" style="padding: 15px;">
+                <div class="chart-controls">
+                    <button id="btn-chart-day" class="btn-chart active">Tag</button>
+                    <button id="btn-chart-week" class="btn-chart">Woche</button>
+                    <button id="btn-chart-month" class="btn-chart">Monat</button>
+                </div>
+                <div style="position: relative; height: 250px; width: 100%;">
+                    <canvas id="statsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <div class="stat-row">
+                    <span>Gespielte Runden:</span>
+                    <span id="stat-rounds" style="font-weight:bold;">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Aufgaben gesamt:</span>
+                    <span id="stat-total" style="font-weight:bold;">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Davon richtig:</span>
+                    <span id="stat-correct" style="font-weight:bold; color: var(--correct-color);">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Erfolgsquote:</span>
+                    <span id="stat-percent" style="font-weight:bold;">0%</span>
+                </div>
+            </div>
+            <button id="btn-reset-stats" class="btn-text" style="color: var(--wrong-color); margin-top: 15px; margin-bottom: 30px;">Statistiken zurücksetzen</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
